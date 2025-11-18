@@ -1,6 +1,8 @@
 const { query } = require("../config/database");
 
 exports.getAllBooks = async ({ title, author, page = 1, limit = 10 }) => {
+  page = parseInt(page) || 1;
+  limit = parseInt(limit) || 10;
   const offset = (page - 1) * limit;
 
   let conditions = [];
@@ -16,26 +18,19 @@ exports.getAllBooks = async ({ title, author, page = 1, limit = 10 }) => {
     conditions.push(`LOWER(author) LIKE LOWER($${params.length})`);
   }
 
-  const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(" AND ")}` : "";
+  const where = conditions.length ? `WHERE ${conditions.join(" AND ")}` : "";
 
-  // Count total rows
-  const countResult = await query(
-    `SELECT COUNT(*) AS total FROM books ${whereClause}`,
-    params
-  );
+  const totalRes = await query(`SELECT COUNT(*) AS total FROM books ${where}`, params);
+  const total = Number(totalRes.rows[0].total);
 
-  const total = parseInt(countResult.rows[0].total);
-
-  // Fetch result data
   params.push(limit, offset);
 
-  const booksResult = await query(
+  const rows = await query(
     `
-    SELECT 
-      id, title, author, published_year, stock, isbn,
-      CASE WHEN stock > 0 THEN true ELSE false END AS available
+    SELECT id, title, author, published_year, stock, isbn,
+    (stock > 0) AS available
     FROM books
-    ${whereClause}
+    ${where}
     ORDER BY created_at DESC
     LIMIT $${params.length - 1}
     OFFSET $${params.length}
@@ -44,12 +39,12 @@ exports.getAllBooks = async ({ title, author, page = 1, limit = 10 }) => {
   );
 
   return {
-    data: booksResult.rows,
+    data: rows.rows,
     pagination: {
       total,
-      page: Number(page),
-      limit: Number(limit),
-      totalPages: Math.ceil(total / limit),
-    },
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit)
+    }
   };
 };

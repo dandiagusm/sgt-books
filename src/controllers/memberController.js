@@ -2,19 +2,8 @@ const memberService = require("../services/memberService");
 
 exports.createMember = async (req, res, next) => {
   try {
-    const { name, email, phone, address } = req.body;
-
-    const result = await memberService.createMember({
-      name,
-      email,
-      phone,
-      address,
-    });
-
-    return res.status(201).json({
-      success: true,
-      data: result,
-    });
+    const result = await memberService.createMember(req.body);
+    res.status(201).json({ data: result });
   } catch (err) {
     next(err);
   }
@@ -22,20 +11,14 @@ exports.createMember = async (req, res, next) => {
 
 exports.getBorrowingHistory = async (req, res, next) => {
   try {
-    const memberId = req.params.id;
-    const { status, page, limit } = req.query;
-
     const result = await memberService.getBorrowingHistory({
-      memberId,
-      status,
-      page,
-      limit,
+      memberId: req.params.id,
+      status: req.query.status,
+      page: req.query.page,
+      limit: req.query.limit
     });
 
-    return res.json({
-      success: true,
-      ...result,
-    });
+    res.json(result);
   } catch (err) {
     next(err);
   }
