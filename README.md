@@ -24,7 +24,8 @@ cd your-repo#
 ```bash
 npm install
 ```
-## Buat / masukkan database yang akan digunakan
+## Buat / masukkan database yang akan digunakan di lokal postgress 
+Sudah disediakan library_db
 
 ## make .env (copy from .env.sample)
 Sesuakan dengan setup lokal (password, dll)
