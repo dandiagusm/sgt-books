@@ -8,10 +8,6 @@
 | npm      | ≥ 8 |
 | PostgreSQL | ≥ 12 |
 
----
-
----
-
 # Setup Project di Local
 
 ## Clone Repo
