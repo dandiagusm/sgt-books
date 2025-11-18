@@ -17,3 +17,17 @@ exports.returnBook = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.getAllBorrowings = async (req, res, next) => {
+  try {
+    const result = await borrowingService.getAllBorrowings({
+      status: req.query.status,
+      page: req.query.page,
+      limit: req.query.limit
+    });
+
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
+};

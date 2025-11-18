@@ -69,3 +69,41 @@ exports.returnBook = async (id) => {
     client.release();
   }
 };
+
+exports.getAllBorrowings = async ({ page = 1, limit = 10 }) => {
+  const client = await getClient();
+
+  page = parseInt(page) || 1;
+  limit = parseInt(limit) || 10;
+
+  const offset = (page - 1) * limit;
+
+  try {
+    // Count
+    const count = await client.query(`SELECT COUNT(*) AS total FROM borrowings`);
+    const total = Number(count.rows[0].total);
+
+    // Data
+    const rows = await client.query(
+      `
+        SELECT id, book_id
+        FROM borrowings
+        LIMIT $1 OFFSET $2
+      `,
+      [limit, offset]
+    );
+
+    return {
+      data: rows.rows,
+      pagination: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
+
+  } finally {
+    client.release(); // release connection
+  }
+};

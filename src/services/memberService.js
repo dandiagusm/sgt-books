@@ -62,7 +62,7 @@ exports.getBorrowingHistory = async ({ memberId, status, page = 1, limit = 10 })
   const rows = await query(
     `
     SELECT 
-      b.id, b.borrow_date, b.return_date, b.status,
+      b.id, b.member_id, b.borrow_date, b.return_date, b.status,
       bk.title, bk.author, bk.isbn
     FROM borrowings b
     JOIN books bk ON bk.id = b.book_id
@@ -72,6 +72,39 @@ exports.getBorrowingHistory = async ({ memberId, status, page = 1, limit = 10 })
     OFFSET $${params.length}
     `,
     params
+  );
+
+  return {
+    data: rows.rows,
+    pagination: {
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit)
+    }
+  };
+};
+
+exports.getAllMembers = async ({ page = 1, limit = 10 }) => {
+  page = parseInt(page) || 1;
+  limit = parseInt(limit) || 10;
+
+  const offset = (page - 1) * limit;
+
+  // Count total
+  const count = await query(`SELECT COUNT (*) AS total FROM members`);
+  const total = Number(count.rows[0].total);
+
+  // Fetch list
+  const rows = await query(
+    `
+    SELECT 
+      id, name, email, phone, address, created_at
+    FROM members
+    ORDER BY created_at DESC
+    LIMIT $1 OFFSET $2
+    `,
+    [limit, offset]
   );
 
   return {

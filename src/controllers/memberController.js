@@ -23,3 +23,16 @@ exports.getBorrowingHistory = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.getAllMembers = async (req, res, next) => {
+  try {
+    const result = await memberService.getAllMembers({
+      page: req.query.page,
+      limit: req.query.limit
+    });
+
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
+};
