@@ -14,8 +14,22 @@
 
 # Setup Project di Local
 
-## 1️⃣ Clone Repo
+## Clone Repo
 ```bash
 git clone https://github.com/your-username/your-repo.git
 cd your-repo# 
+```
+
+## Install
+```bash
+npm install
+```
+## Buat / masukkan database yang akan digunakan
+
+## make .env (copy from .env.sample)
+Sesuakan dengan setup lokal (password, dll)
+
+## Run
+```bash
+npm run dev
 ```
