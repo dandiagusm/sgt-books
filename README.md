@@ -7,18 +7,6 @@
 | PostgreSQL | ≥ 15 |
 | Express.js | 5 |
 
-## Project Structure
-src/
-  config/
-  controllers/
-  models/
-  services/
-  routes/
-db/
-  schema.sql
-  sample_data.sql
-  index.sql
-
 ## Indexing
 Dilakukan indexing terhadapat querry yang sering dilakukan
 ```
