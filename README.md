@@ -19,8 +19,7 @@ CREATE INDEX idx_borrowings_book_id ON borrowings (book_id);
 
 ```
 
-# Setup Project di Local
-
+# How to run in Local
 ## Clone Repo
 ```bash
 git clone https://github.com/dandiagusm/sgt-books.git
