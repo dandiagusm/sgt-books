@@ -6,6 +6,7 @@
 | npm      | 11 |
 | PostgreSQL | ≥ 15 |
 | Express.js | 5 |
+---
 
 ## Indexing
 Dilakukan indexing terhadapat querry yang sering dilakukan
@@ -18,7 +19,7 @@ CREATE INDEX idx_borrowings_status ON borrowings (status);
 CREATE INDEX idx_borrowings_book_id ON borrowings (book_id);
 
 ```
-
+---
 # How to run in Local
 ## Clone Repo
 ```bash
@@ -63,7 +64,7 @@ Server beralan di
 ```
 http://localhost:3000
 ```
-
+---
 # API Documentation
 Links : [Postman Public Collection](https://documenter.getpostman.com/view/9425838/2sB3Wwry44) 
 or get the file from docs/ and import the collection to Postman.
