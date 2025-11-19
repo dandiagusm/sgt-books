@@ -16,7 +16,7 @@ pool
     client.release();
   })
   .catch((err) => {
-    console.error("❌ PostgreSQL connection error:", err.message);
+    console.error("PostgreSQL connection error:", err.message);
   });
 
 const query = (text, params) => {

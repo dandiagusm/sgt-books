@@ -112,7 +112,6 @@ exports.getBorrowingHistory = async ({ memberId, status, page = 1, limit = 10 })
 
   params.push(limit, offset); 
 
-  // Fetch borrowing data (includes book details)
   const rows = await query(
     `
       SELECT

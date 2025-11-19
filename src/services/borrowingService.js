@@ -79,14 +79,12 @@ exports.getAllBorrowings = async ({ page = 1, limit = 10 }) => {
   const offset = (page - 1) * limit;
 
   try {
-    // Count
     const count = await client.query(`SELECT COUNT(*) AS total FROM borrowings`);
     const total = Number(count.rows[0].total);
 
-    // Data
     const rows = await client.query(
       `
-        SELECT id, book_id
+        SELECT id, book_id, member_id, borrow_date, return_date, status
         FROM borrowings
         LIMIT $1 OFFSET $2
       `,
@@ -104,6 +102,6 @@ exports.getAllBorrowings = async ({ page = 1, limit = 10 }) => {
     };
 
   } finally {
-    client.release(); // release connection
+    client.release(); 
   }
 };

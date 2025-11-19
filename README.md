@@ -1,6 +1,26 @@
-# Library API — Node.js + Express + PostgreSQL
+# Library API 
+## System Requirements
+| Component | Version |
+|----------|---------|
+| Node.js  |  22 |
+| npm      | 11 |
+| PostgreSQL | ≥ 15 |
+| Express.js | 5 |
+
+## Project Structure
+src/
+  config/
+  controllers/
+  models/
+  services/
+  routes/
+db/
+  schema.sql
+  sample_data.sql
+  index.sql
 
 ## Indexing
+Dilakukan indexing terhadapat querry yang sering dilakukan
 ```
 CREATE INDEX idx_books_title_lower ON books (LOWER(title));
 CREATE INDEX idx_books_author_lower ON books (LOWER(author));
@@ -11,33 +31,58 @@ CREATE INDEX idx_borrowings_book_id ON borrowings (book_id);
 
 ```
 
-## System Requirements
-
-| Component | Version |
-|----------|---------|
-| Node.js  | ≥ 16 |
-| npm      | ≥ 8 |
-| PostgreSQL | ≥ 12 |
-
 # Setup Project di Local
 
 ## Clone Repo
 ```bash
-git clone https://github.com/your-username/your-repo.git
-cd your-repo# 
+git clone https://github.com/dandiagusm/sgt-books.git
+cd sgt-books
 ```
 
 ## Install
 ```bash
 npm install
 ```
-## Buat / masukkan database yang akan digunakan di lokal postgress 
-Sudah disediakan library_db
 
-## make .env (copy from .env.sample)
-Sesuakan dengan setup lokal (password, dll)
+## Setup Environment Variables
+Buat file .env pada root atau copy dari .env.example
+```
+DB_HOST=localhost
+DB_USER=postgres
+DB_PASSWORD=root
+DB_NAME=library_db
+DB_PORT=5432
+```
+sesuaikan db user, password, dan db name yang akan digunakan di lokal Anda.
 
-## Run
+## Create Database
+```
+psql -U postgres
+CREATE DATABASE library_db;
+```
+
+## Import sql scheme and sample data
+```
+psql -U postgres -d library_db -f sql/schema.sql
+psql -U postgres -d library_db -f sql/sample_data.sql
+psql -U postgres -d library_db -f sql/index.sql
+```
+
+## Run the server
 ```bash
 npm run dev
 ```
+Server beralan di
+```
+http://localhost:3000
+```
+
+# API Documentation
+Links : [Postman Public Collection](https://documenter.getpostman.com/view/9425838/2sB3Wwry44) 
+or get the file from docs/ and import the collection to Postman.
+It includes:
+- GET /api/books
+- POST /api/members
+- POST /api/borrowings
+- PUT /api/borrowings/:id/return
+- GET /api/members/:id/borrowings

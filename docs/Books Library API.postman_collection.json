@@ -1,0 +1,261 @@
+{
+	"info": {
+		"_postman_id": "57489d75-ec11-47b4-9571-c362217a3f2f",
+		"name": "Books Library API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "9425838"
+	},
+	"item": [
+		{
+			"name": "api/books",
+			"item": [
+				{
+					"name": "GET ALL BOOKS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3000/api/books"
+					},
+					"response": []
+				},
+				{
+					"name": "GET BOOK (With Filters)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/books?title=cat&author=&page=1&limit=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "cat"
+								},
+								{
+									"key": "author",
+									"value": ""
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "api/members",
+			"item": [
+				{
+					"name": "CREATE MEMBER",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Tester\",\n  \"email\": \"john.tester@example.com\",\n  \"phone\": \"081234567123\",\n  \"address\": \"Somewhere Street\"\n}"
+						},
+						"url": "http://localhost:3000/api/members"
+					},
+					"response": []
+				},
+				{
+					"name": "GET ALL MEMBERS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3000/api/members"
+					},
+					"response": []
+				},
+				{
+					"name": "GET MEMBER BORROWING",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/members/:id/borrowings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"members",
+								":id",
+								"borrowings"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "07a77179-4e40-4a6e-bc7f-929aee2f18a1",
+									"description": "Member UUID"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET MEMBER BORROWINGS (With Status)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/members/:id/borrowings?status=borrowed&page=1&limit=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"members",
+								":id",
+								"borrowings"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "borrowed"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "07a77179-4e40-4a6e-bc7f-929aee2f18a1",
+									"description": "Member UUID"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "api/borrowings",
+			"item": [
+				{
+					"name": "GET ALL BORROWINGS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3000/api/borrowings"
+					},
+					"response": []
+				},
+				{
+					"name": "BORROW BOOK",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"book_id\": \"a033a8eb-399e-4f78-b1af-6ddae0d313d6\",\n  \"member_id\": \"10008fbf-c58f-4d33-b541-7f5bd57cfd63\"\n}"
+						},
+						"url": "http://localhost:3000/api/borrowings"
+					},
+					"response": []
+				},
+				{
+					"name": "GET BORROWINGS (With Status Filter)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/borrowings?status=BORROWED&page=1&limit=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"borrowings"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "BORROWED"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RETURN BOOK",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/borrowings/:id/return",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"borrowings",
+								":id",
+								"return"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "705636e1-9299-4e51-bd44-b20e0ec6310e",
+									"description": "Borrowing UUID"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
